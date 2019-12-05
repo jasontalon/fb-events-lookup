@@ -1,0 +1,33 @@
+{
+  "name": "fb-events",
+  "version": "1.0.0",
+  "description": "My splendid Nuxt.js project",
+  "author": "Jason Talon",
+  "private": true,
+  "scripts": {
+    "dev": "nodemon --watch api --exec \"nuxt\"",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.3.6",
+    "dotenv": "^8.2.0",
+    "lodash": "^4.17.15",
+    "moment": "^2.24.0",
+    "nuxt": "^2.10.2",
+    "resemblejs": "^3.2.3"
+  },
+  "devDependencies": {
+    "@nuxtjs/vuetify": "^1.0.0",
+    "@vue/test-utils": "^1.0.0-beta.27",
+    "babel-jest": "^24.1.0",
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-plugin-prettier": "^3.0.1",
+    "jest": "^24.1.0",
+    "nodemon": "^2.0.0",
+    "prettier": "^1.16.4",
+    "vue-jest": "^4.0.0-0"
+  }
+}
