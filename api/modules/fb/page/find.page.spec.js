@@ -6,5 +6,5 @@ describe('test find page', () => {
 
     const data = await findPage(id)
     expect(data).toEqual(expect.anything())
-  })
+  }, 20000)
 })
