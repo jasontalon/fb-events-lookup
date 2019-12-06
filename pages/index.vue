@@ -292,7 +292,7 @@
       <v-card-title>Ticket Provider Tally</v-card-title>
       <v-card-subtitle>From {{events.items.length}} events</v-card-subtitle>
       <div class="mx-2">
-        <v-chip class="ma-2" v-for="({name, count}, index) in hostsTally" :key="index" >
+        <v-chip class="ma-2" v-for="({name, count}, index) in hostsTally" :key="index" :color="index == 0 && 'blue'">
           {{name}} ({{count}})
         </v-chip>
       </div>
