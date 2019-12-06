@@ -30,7 +30,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['~/plugins/moment.js', '~/plugins/lodash.js'],
+  plugins: ['~/plugins/moment.js', '~/plugins/lodash.js', '~/plugins/flat.js', '~/plugins/json2csv.js'],
   /*
    ** Nuxt.js dev-modules
    */

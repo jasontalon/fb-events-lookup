@@ -262,6 +262,7 @@
             dark
             small
             color="red"
+            @click="dialogs.stats.show = true"
           >
             <v-icon>mdi-counter</v-icon>
           </v-btn>
@@ -276,27 +277,30 @@
             dark
             small
             color="red"
+            @click="flattenEvents()"
           >
             <v-icon>mdi-download</v-icon>
           </v-btn>
       </template>
       <span>Download</span>
       </v-tooltip>
-      <v-tooltip left>
-        <template v-slot:activator="{on}">
-          <v-btn
-          v-on="on"
-            fab
-            dark
-            small
-            color="indigo"
-          >
-            <v-icon>mdi-magnify</v-icon>
-          </v-btn>
-        </template>
-        <span>Filter events</span>
-      </v-tooltip>
+
     </v-speed-dial>
+
+  <v-dialog v-model="dialogs.stats.show" max-width="540px">
+    <v-card raised class="mx-auto">
+      <v-card-title>Ticket Provider Tally</v-card-title>
+      <v-card-subtitle>From {{events.items.length}} events</v-card-subtitle>
+      <div class="mx-2">
+        <v-chip class="ma-2" v-for="({name, count}, index) in hostsTally" :key="index" >
+          {{name}} ({{count}})
+        </v-chip>
+      </div>
+      <v-card-actions class="justify-end mx-2">
+        <v-btn @click="dialogs.stats.show = false" >Ok</v-btn>
+    </v-card-actions>
+    </v-card>
+  </v-dialog>
   </v-layout>
 </template>
 
@@ -375,11 +379,42 @@ export default {
 
         this.$set(item.host, 'details', {address, email, phone, website})
       });
+    },
+    flattenEvents(){
+        const _ = this.$nuxt.$_;
+        const flattenedEvents = this.$nuxt.$flat(JSON.parse(JSON.stringify(this.events.items)));
+
+        const props = _.uniq(Object.keys(flattenedEvents).map(p => _.tail(p.split('.')).join('.')));
+
+        const parser = new this.$nuxt.$parser(props);
+
+        const parsedEvents = [];
+
+        for(let i = 0; i < this.events.items.length; i++){
+          const flatEvent = {};
+          _.forEach(props, (prop) => {
+            const propName = `${i}.${prop}`;
+            const value = flattenedEvents[propName];
+
+            flatEvent[prop] = !_.isNil(value) ? value.toString() :  "";
+          })
+          parsedEvents.push(flatEvent);
+        }
+        var hiddenElement = document.createElement('a');
+        hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(parser.parse(parsedEvents));
+        hiddenElement.target = '_blank';
+        hiddenElement.download = 'events.csv';
+        hiddenElement.click();
     }
   },
 
   data() {
     return {
+      dialogs:{
+        stats: {
+          show : false
+        }
+      },
       actionButton: {
         direction: 'top',
         fab: false,
@@ -392,7 +427,6 @@ export default {
         left: false,
         transition: 'slide-y-reverse-transition'
       },
-
       categories: {
         music: true,
         food: false,
@@ -428,6 +462,21 @@ export default {
       loading: false
     }
   },
+  computed: {
+    hostsTally() {
+      const hostCounts = this.$nuxt.$_.countBy(this.events.items, 'buyTicketHost')
+
+      const keyValueHostCounts = Object.keys(hostCounts).map(prop => {
+        const name = prop.includes("eventbrite") ? "eventbrite" : prop || 'n/a';
+        return {name, count: hostCounts[prop]};
+      })
+
+      const sortedKeyValueHostCounts = keyValueHostCounts.sort(function(a,b) {
+        return b.count - a.count;
+      })
+      return sortedKeyValueHostCounts
+    }
+  },
   mounted() {
     const defaultCity = { text: 'Sydney, Australia', value: 110884905606108 }
     this.city.search.results = [defaultCity]
@@ -443,7 +492,6 @@ export default {
       .format('YYYY-MM-DD')
 
     this.debouncedSearchCity = this.$nuxt.$_.debounce(this.searchCity, 500)
-
   }
 }
 </script>
