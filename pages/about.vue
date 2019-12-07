@@ -4,7 +4,7 @@
       <v-col cols="12" class="d-flex align-center justify-center">
         <v-card raised width="480px">
           <v-card-title>Overview</v-card-title>
-          <div class="ma-3">Searches for events in facebook</div>
+          <div class="ma-3">A simple app that searches for events in facebook</div>
         </v-card>
       </v-col>
     </v-row>
@@ -62,7 +62,7 @@
                 >Heroku</v-list-item-title
               >
               <v-list-item-subtitle>
-                container-based cloud Platform as a Service
+                Container-based cloud Platform as a Service
                 (PaaS).</v-list-item-subtitle
               >
             </v-list-item-content>
@@ -81,10 +81,11 @@
 </template>
 
 <script>
-import Logo from '../components/Logo'
 export default {
-  components: {
-    Logo
+  head() {
+    return {
+      title: 'About'
+    }
   }
 }
 </script>

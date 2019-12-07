@@ -9,7 +9,7 @@ export default {
    ** Headers of the page
    */
   head: {
-    titleTemplate: '%s - ' + process.env.npm_package_name,
+    titleTemplate: 'Facebook Events Finder - %s',
     title: process.env.npm_package_name || '',
     meta: [
       { charset: 'utf-8' },

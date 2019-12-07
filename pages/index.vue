@@ -492,6 +492,11 @@ export default {
       .format('YYYY-MM-DD')
 
     this.debouncedSearchCity = this.$nuxt.$_.debounce(this.searchCity, 500)
+  },
+  head(){
+    return {
+      title : 'Find Events'
+    }
   }
 }
 </script>
