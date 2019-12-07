@@ -18,7 +18,7 @@
               <v-list-item-title class="headline mb-1"
                 >NuxtJS</v-list-item-title
               >
-              <v-list-item-subtitle>A Vue.js framework</v-list-item-subtitle>
+              <v-list-item-subtitle>A Vue.js framework.</v-list-item-subtitle>
             </v-list-item-content>
 
             <a href="https://www.nuxtjs.org/" target="_blank">
@@ -62,7 +62,7 @@
                 >Heroku</v-list-item-title
               >
               <v-list-item-subtitle>
-                Container-based cloud Platform as a Service
+                Container-based cloud Platform as a Service.
                 (PaaS).</v-list-item-subtitle
               >
             </v-list-item-content>
